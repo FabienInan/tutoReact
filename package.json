@@ -16,7 +16,9 @@
     "webpack": "^1.12.15"
   },
   "dependencies": {
+    "firebase": "^2.4.2",
     "history": "^2.0.1",
-    "react-router": "^2.2.2"
+    "react-router": "^2.2.2",
+    "reactfire": "^0.6.0"
   }
 }
