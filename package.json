@@ -16,6 +16,7 @@
     "webpack": "^1.12.15"
   },
   "dependencies": {
+    "axios": "^0.10.0",
     "firebase": "^2.4.2",
     "history": "^2.0.1",
     "react-router": "^2.2.2",
