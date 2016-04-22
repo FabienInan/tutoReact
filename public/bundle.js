@@ -24552,7 +24552,7 @@
 	var Notes = __webpack_require__(217);
 	var ReactFireMixIn = __webpack_require__(220);
 	var Firebase = __webpack_require__(221);
-	var helpers = __webpack_require__(223);
+	var helpers = __webpack_require__(222);
 
 	var Profile = React.createClass({
 	  displayName: 'Profile',
@@ -24617,26 +24617,50 @@
 /* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
 
 	var Repos = React.createClass({
-	  displayName: 'Repos',
+	  displayName: "Repos",
 
 	  propTypes: {
 	    username: React.PropTypes.string.isRequired,
 	    repos: React.PropTypes.array.isRequired
 	  },
 	  render: function render() {
-	    console.log('REPOS', this.props.repos);
+	    var repos = this.props.repos.map(function (repo, index) {
+	      return React.createElement(
+	        "li",
+	        { className: "list-group-item", key: index },
+	        repo.html_url && React.createElement(
+	          "h4",
+	          null,
+	          React.createElement(
+	            "a",
+	            { href: repo.html_url },
+	            repo.name
+	          )
+	        ),
+	        repo.description && React.createElement(
+	          "p",
+	          null,
+	          repo.description
+	        )
+	      );
+	    });
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
 	      React.createElement(
-	        'p',
+	        "h3",
 	        null,
-	        ' Repos '
+	        " Repos "
+	      ),
+	      React.createElement(
+	        "ul",
+	        { className: "list-group" },
+	        repos
 	      )
 	    );
 	  }
@@ -24648,33 +24672,85 @@
 /* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	var React = __webpack_require__(1);
 
 	var UserProfile = React.createClass({
-	  displayName: 'UserProfile',
+	  displayName: "UserProfile",
 
 	  propTypes: {
 	    username: React.PropTypes.string.isRequired,
 	    bio: React.PropTypes.object.isRequired
 	  },
 	  render: function render() {
-	    console.log('BIO', this.props.bio);
 	    return React.createElement(
-	      'div',
+	      "div",
 	      null,
-	      React.createElement(
-	        'p',
-	        null,
-	        ' UserProfile '
+	      this.props.bio.avatar_url && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        " ",
+	        React.createElement("img", { src: this.props.bio.avatar_url, className: "img-rounded img-responsive" })
 	      ),
-	      React.createElement(
-	        'p',
-	        null,
-	        ' UserName : ',
-	        this.props.username,
-	        ' '
+	      this.props.bio.name && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Name: ",
+	        this.props.bio.name
+	      ),
+	      this.props.bio.login && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Username: ",
+	        this.props.bio.login
+	      ),
+	      this.props.bio.email && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Email: ",
+	        this.props.bio.email
+	      ),
+	      this.props.bio.location && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Location: ",
+	        this.props.bio.location
+	      ),
+	      this.props.bio.company && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Company: ",
+	        this.props.bio.company
+	      ),
+	      this.props.bio.followers && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Followers: ",
+	        this.props.bio.followers
+	      ),
+	      this.props.bio.following && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Following: ",
+	        this.props.bio.following
+	      ),
+	      this.props.bio.following && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Public Repos: ",
+	        this.props.bio.public_repos
+	      ),
+	      this.props.bio.blog && React.createElement(
+	        "li",
+	        { className: "list-group-item" },
+	        "Blog: ",
+	        React.createElement(
+	          "a",
+	          { href: this.props.bio.blog },
+	          " ",
+	          this.props.bio.blog
+	        )
 	      )
 	    );
 	  }
@@ -25449,13 +25525,12 @@
 
 
 /***/ },
-/* 222 */,
-/* 223 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var axios = __webpack_require__(224);
+	var axios = __webpack_require__(223);
 
 	function getRepos(username) {
 	  return axios.get('https://api.github.com/users/' + username + '/repos');
@@ -25479,25 +25554,25 @@
 	module.exports = helpers;
 
 /***/ },
-/* 224 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(225);
+	module.exports = __webpack_require__(224);
 
 /***/ },
-/* 225 */
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var defaults = __webpack_require__(226);
-	var utils = __webpack_require__(227);
-	var dispatchRequest = __webpack_require__(228);
-	var InterceptorManager = __webpack_require__(236);
-	var isAbsoluteURL = __webpack_require__(237);
-	var combineURLs = __webpack_require__(238);
-	var bind = __webpack_require__(239);
-	var transformData = __webpack_require__(232);
+	var defaults = __webpack_require__(225);
+	var utils = __webpack_require__(226);
+	var dispatchRequest = __webpack_require__(227);
+	var InterceptorManager = __webpack_require__(235);
+	var isAbsoluteURL = __webpack_require__(236);
+	var combineURLs = __webpack_require__(237);
+	var bind = __webpack_require__(238);
+	var transformData = __webpack_require__(231);
 
 	function Axios(defaultConfig) {
 	  this.defaults = utils.merge({}, defaultConfig);
@@ -25582,7 +25657,7 @@
 	axios.all = function all(promises) {
 	  return Promise.all(promises);
 	};
-	axios.spread = __webpack_require__(240);
+	axios.spread = __webpack_require__(239);
 
 	// Provide aliases for supported request methods
 	utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
@@ -25610,12 +25685,12 @@
 
 
 /***/ },
-/* 226 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	var PROTECTION_PREFIX = /^\)\]\}',?\n/;
 	var DEFAULT_CONTENT_TYPE = {
@@ -25681,7 +25756,7 @@
 
 
 /***/ },
-/* 227 */
+/* 226 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -25931,7 +26006,7 @@
 
 
 /***/ },
-/* 228 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
@@ -25953,10 +26028,10 @@
 	        adapter = config.adapter;
 	      } else if (typeof XMLHttpRequest !== 'undefined') {
 	        // For browsers use XHR adapter
-	        adapter = __webpack_require__(229);
+	        adapter = __webpack_require__(228);
 	      } else if (typeof process !== 'undefined') {
 	        // For node use HTTP adapter
-	        adapter = __webpack_require__(229);
+	        adapter = __webpack_require__(228);
 	      }
 
 	      if (typeof adapter === 'function') {
@@ -25972,17 +26047,17 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 229 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {'use strict';
 
-	var utils = __webpack_require__(227);
-	var buildURL = __webpack_require__(230);
-	var parseHeaders = __webpack_require__(231);
-	var transformData = __webpack_require__(232);
-	var isURLSameOrigin = __webpack_require__(233);
-	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(234);
+	var utils = __webpack_require__(226);
+	var buildURL = __webpack_require__(229);
+	var parseHeaders = __webpack_require__(230);
+	var transformData = __webpack_require__(231);
+	var isURLSameOrigin = __webpack_require__(232);
+	var btoa = (typeof window !== 'undefined' && window.btoa) || __webpack_require__(233);
 
 	module.exports = function xhrAdapter(resolve, reject, config) {
 	  var requestData = config.data;
@@ -26085,7 +26160,7 @@
 	  // This is only done if running in a standard browser environment.
 	  // Specifically not if we're in a web worker, or react-native.
 	  if (utils.isStandardBrowserEnv()) {
-	    var cookies = __webpack_require__(235);
+	    var cookies = __webpack_require__(234);
 
 	    // Add xsrf header
 	    var xsrfValue = config.withCredentials || isURLSameOrigin(config.url) ?
@@ -26151,12 +26226,12 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ },
-/* 230 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	function encode(val) {
 	  return encodeURIComponent(val).
@@ -26224,12 +26299,12 @@
 
 
 /***/ },
-/* 231 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	/**
 	 * Parse headers into an object
@@ -26267,12 +26342,12 @@
 
 
 /***/ },
-/* 232 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	/**
 	 * Transform the data for a request or a response
@@ -26293,12 +26368,12 @@
 
 
 /***/ },
-/* 233 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26367,7 +26442,7 @@
 
 
 /***/ },
-/* 234 */
+/* 233 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26409,12 +26484,12 @@
 
 
 /***/ },
-/* 235 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	module.exports = (
 	  utils.isStandardBrowserEnv() ?
@@ -26468,12 +26543,12 @@
 
 
 /***/ },
-/* 236 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var utils = __webpack_require__(227);
+	var utils = __webpack_require__(226);
 
 	function InterceptorManager() {
 	  this.handlers = [];
@@ -26526,7 +26601,7 @@
 
 
 /***/ },
-/* 237 */
+/* 236 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26546,7 +26621,7 @@
 
 
 /***/ },
-/* 238 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26564,7 +26639,7 @@
 
 
 /***/ },
-/* 239 */
+/* 238 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -26581,7 +26656,7 @@
 
 
 /***/ },
-/* 240 */
+/* 239 */
 /***/ function(module, exports) {
 
 	'use strict';
