@@ -24487,7 +24487,7 @@
 	    var username = this.usernameRef.value;
 	    this.usernameRef.value = '';
 	    //push state : api html5
-	    this.history.pushState(null, "profile/" + username);
+	    this.history.pushState(null, "/profile/" + username);
 	  },
 	  render: function render() {
 	    return React.createElement(
@@ -24569,18 +24569,25 @@
 	  },
 	  componentDidMount: function componentDidMount() {
 	    this.ref = new Firebase('https://first-tuto-react.firebaseio.com/');
-	    var childRef = this.ref.child(this.props.params.username);
+	    this.init(this.props.params.username);
+	  },
+	  componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	    this.unbind('notes');
+	    this.init(nextProps.params.username);
+	  },
+	  componentWillUnmount: function componentWillUnmount() {
+	    this.unbind('notes');
+	  },
+	  init: function init(newUsername) {
+	    var childRef = this.ref.child(newUsername);
 	    this.bindAsArray(childRef, 'notes');
 
-	    helpers.getGithubInfo(this.props.params.username).then(function (data) {
+	    helpers.getGithubInfo(newUsername).then(function (data) {
 	      this.setState({
 	        bio: data.bio,
 	        repos: data.repos
 	      });
 	    }.bind(this));
-	  },
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.unbind('notes');
 	  },
 	  handleAddNote: function handleAddNote(newNote) {
 	    this.ref.child(this.props.params.username).child(this.state.notes.length).set(newNote);
